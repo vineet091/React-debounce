@@ -39,3 +39,40 @@ export default function App() {
     </div>
   );
 }
+
+//2nd method
+
+// import "./styles.css";
+// import { useEffect, useState, useRef } from "react";
+// const useDebounce = (value, time) => {
+//   const timer = useRef(null);
+//   const [newValue, setValue] = useState(value);
+//   useEffect(() => {
+//     timer.current = setTimeout(() => {
+//       setValue(value);
+//     }, time);
+//     return () => {
+//       clearTimeout(timer.current);
+//     };
+//   }, [value]);
+
+//   return newValue;
+// };
+
+// export default function App() {
+//   const [value, setValue] = useState("a");
+//   // this value changes frequently,
+//   const debouncedValue = useDebounce(value, 3000);
+
+//   // now it is debounced
+//   const onChange = (text) => {
+//     setValue(text);
+//     // debouncedValue(text);
+//   };
+//   return (
+//     <div className="App">
+//       <h1>{debouncedValue}</h1>
+//       <input value={value} onChange={(evt) => onChange(evt.target.value)} />
+//     </div>
+//   );
+// }
