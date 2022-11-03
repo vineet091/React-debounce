@@ -10,18 +10,19 @@ const debounce = (func, wait) => {
     }, wait);
   };
 };
-const fetchData = (value) => {
-  console.log("fetchData");
-  fetch(`https//www.examples.com/list/${value}`).then((response) => {
-    console.log(response);
-  });
-};
 
 export default function App() {
   const [value, setValue] = useState("");
   React.useEffect(() => {
-    this.debounceOnChange = debounce(fetchData, 400);
+    this.debounceOnChange = debounce(fetchData, 500);
   }, []);
+
+  const fetchData = (value) => {
+    console.log("fetchData");
+    fetch(`https//www.examples.com/list/${value}`).then((response) => {
+      console.log(response);
+    });
+  };
 
   const onChange = (value) => {
     setValue(value);
