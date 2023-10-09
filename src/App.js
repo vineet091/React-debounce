@@ -13,15 +13,20 @@ const debounce = (func, wait) => {
 
 export default function App() {
   const [value, setValue] = useState("");
+  const [dataList, setDataList] = useState([]);
   React.useEffect(() => {
     this.debounceOnChange = debounce(fetchData, 500);
   }, []);
 
   const fetchData = (value) => {
     console.log("fetchData");
-    fetch(`https//www.examples.com/list/${value}`).then((response) => {
-      console.log(response);
-    });
+    fetch(`https://api.github.com/users/${value}/repos`).then(
+      async (response) => {
+        var data = await response.json();
+        console.log("response", data);
+        setDataList(data);
+      }
+    );
   };
 
   const onChange = (value) => {
@@ -37,6 +42,11 @@ export default function App() {
         value={value}
         onChange={(evt) => onChange(evt.target.value)}
       />
+      <ul className="data-list">
+        {dataList.map((data, index) => {
+          return <li>{data.name}s</li>;
+        })}
+      </ul>
     </div>
   );
 }

@@ -2,3 +2,17 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+ul {
+  list-style: none;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 3px #ddd;
+  padding: 0 4px;
+}
+
+li {
+  padding: 4px 6px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
