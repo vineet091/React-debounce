@@ -1,5 +1,5 @@
 import "./styles.css";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 const debounce = (func, wait) => {
   let timer;
@@ -14,19 +14,29 @@ const debounce = (func, wait) => {
 export default function App() {
   const [value, setValue] = useState("");
   const [dataList, setDataList] = useState([]);
+  const abortController = useRef(null);
+  abortController.current = new AbortController();
   React.useEffect(() => {
     this.debounceOnChange = debounce(fetchData, 500);
   }, []);
 
   const fetchData = (value) => {
     console.log("fetchData");
-    fetch(`https://api.github.com/users/${value}/repos`).then(
-      async (response) => {
+    abortController.current?.abort();
+    abortController.current = new AbortController();
+    console.log(abortController.current);
+
+    fetch(`https://api.github.com/users/${value}/repos`, {
+      signal: abortController.current.signal
+    })
+      .then(async (response) => {
         var data = await response.json();
         console.log("response", data);
         setDataList(data);
-      }
-    );
+      })
+      .catch((err) => {
+        console.error(`Download error: ${err.message}`);
+      });
   };
 
   const onChange = (value) => {
